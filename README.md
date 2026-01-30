@@ -1,6 +1,9 @@
 
 # AdminLTE - Guía de Implementación
 
+He creado un Sistema de Gestión de una cuidadora de animales que cuenta con los módulos de Clientes, Mascotas, Empleados, Productos y Citas, que tiene servicios como Peluquería y Veterinaria.
+Dentro de cada módulo puedes asignar un nombre, número de teléfono, correo... o en el caso de las mascotas su nombre, su dueño, peso, raza... Puedes elegir fechas y horarios para poder guardar las citas que tienes y Stock, precio en caso de Productos...
+
 ## 1. Descarga e Instalación
 
 - Descargué AdminLTE desde el repositorio oficial
