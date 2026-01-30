@@ -1,0 +1,219 @@
+:root {
+    --pet-primary: #2ecc71;
+    --pet-secondary: #27ae60;
+    --pet-accent: #f39c12;
+    --pet-light: #e8f8f5;
+    --pet-dark: #1e5631;
+}
+
+/* Navbar personalizada */
+.navbar-light {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+    border-bottom: 3px solid var(--pet-primary);
+}
+
+/* Sidebar con temática animal */
+.sidebar-dark-success {
+    background: linear-gradient(180deg, #27ae60 0%, #1e5631 100%);
+}
+
+.sidebar-dark-success .nav-link.active {
+    background-color: var(--pet-primary);
+    border-left: 4px solid var(--pet-accent);
+}
+
+.sidebar-dark-success .nav-link:hover {
+    background-color: rgba(46, 204, 113, 0.1);
+}
+
+/* Logo personalizado */
+.brand-text {
+    font-weight: bold;
+    color: var(--pet-primary);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cards con efecto */
+.card {
+    border-top: 4px solid var(--pet-primary);
+    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.1);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--pet-light) 0%, #ffffff 100%);
+    border-bottom: 2px solid var(--pet-primary);
+}
+
+/* Botones */
+.btn-success {
+    background-color: var(--pet-primary);
+    border-color: var(--pet-secondary);
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: var(--pet-secondary);
+    border-color: var(--pet-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+/* Badges y etiquetas */
+.badge-success {
+    background-color: var(--pet-primary);
+}
+
+.badge-info {
+    background-color: var(--pet-accent);
+}
+
+/* Icons con temática */
+.nav-icon.fa-paw {
+    color: var(--pet-accent);
+}
+
+.nav-icon.fa-users {
+    color: #3498db;
+}
+
+.nav-icon.fa-calendar-alt {
+    color: #e74c3c;
+}
+
+.nav-icon.fa-box {
+    color: #9b59b6;
+}
+
+.nav-icon.fa-users-cog {
+    color: #16a085;
+}
+
+.nav-icon.fa-fw {
+    width: 1.25em;
+}
+
+/* Headers profesionales */
+.content-header h1 {
+    color: var(--pet-dark);
+    font-weight: 600;
+    border-left: 4px solid var(--pet-primary);
+    padding-left: 15px;
+}
+
+/* Tablas */
+.table thead th {
+    background-color: var(--pet-light);
+    color: var(--pet-dark);
+    border-bottom: 2px solid var(--pet-primary);
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(46, 204, 113, 0.05);
+}
+
+/* Formularios */
+.form-control:focus {
+    border-color: var(--pet-primary);
+    box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+/* Widget cards para dashboard */
+.info-box {
+    background: linear-gradient(135deg, #ffffff 0%, var(--pet-light) 100%);
+    border-left: 4px solid var(--pet-primary);
+    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.1);
+}
+
+.info-box .info-box-icon {
+    background-color: var(--pet-primary);
+    color: white;
+}
+
+.info-box .info-box-number {
+    color: var(--pet-dark);
+    font-weight: bold;
+}
+
+.info-box .info-box-text {
+    color: #666;
+}
+
+/* Footer */
+.main-footer {
+    background-color: #f8fffe;
+    border-top: 3px solid var(--pet-primary);
+    color: var(--pet-dark);
+}
+
+.main-footer a {
+    color: var(--pet-primary);
+    text-decoration: none;
+}
+
+.main-footer a:hover {
+    color: var(--pet-secondary);
+}
+
+/* Animaciones suaves */
+.sidebar-dark-success .nav-link,
+.btn,
+.card,
+.form-control {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el título brand en navbar */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--pet-primary) !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: var(--pet-secondary) !important;
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .brand-text {
+        font-size: 1.2rem;
+    }
+    
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Efecto de hover en sidebar items */
+.sidebar-dark-success .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.sidebar-dark-success .nav-link:hover {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #fff;
+    padding-left: 1.5rem;
+}
+
+/* Mejorar accesibilidad */
+.nav-link.active span {
+    font-weight: 600;
+}
+
+/* Estilos para status badges */
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 0.25rem;
+}
