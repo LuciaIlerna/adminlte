@@ -1,84 +1,140 @@
+# Segunda Entrega
 
-# AdminLTE - Guía de Implementación
+### **Sistema de Roles y Permisos** 
 
-He creado un Sistema de Gestión de una cuidadora de animales que cuenta con los módulos de Clientes, Mascotas, Empleados, Productos y Citas, que tiene servicios como Peluquería y Veterinaria.
-Dentro de cada módulo puedes asignar un nombre, número de teléfono, correo... o en el caso de las mascotas su nombre, su dueño, peso, raza... Puedes elegir fechas y horarios para poder guardar las citas que tienes y Stock, precio en caso de Productos...
+Ahora el sistema distingue entre dos tipos de usuario, cada uno con diferentes permisos:
 
-El usuario para poder entrar es: admin@admin.es
-La contraseña es: adminadmin
+#### **Admin**
+- Ver todos los registros
+- Crear nuevos registros
+- Editar cualquier registro
+- **Eliminar registros** 
 
-## 1. Descarga e Instalación
+#### **Usuario Estándar**
+- Ver todos los registros
+- Crear nuevos registros
+- Editar registros
+- NO puede eliminar 
 
-- Descargué AdminLTE desde el repositorio oficial
-- Extraje los archivos en `/C:/xampp/htdocs/adminlte/`
-- Verifiqué la estructura de carpetas (css, js, images, etc.)
+**Usuarios de prueba creados automáticamente:**
+Admin:     admin@example.com    (password)
+Usuario:   test@example.com     (password)
 
-## 2. Configuración Inicial
+### **DataTables** 
 
-- Configuré la conexión local con XAMPP
-- Accedí al proyecto mediante `localhost/adminlte/`
-- Configurar la conexión a la base de datos en .env
-- Instalé dependencias necesarias 
+Las tablas de listado ahora son inteligentes y te permiten:
 
-## 3. Personalización
+- **Buscar en tiempo real**  Mientras escribes encuentra lo que buscas
+- **Ordenar columnas**  Click en el encabezado para ordenar
+- **Rendimiento**  Carga rápida incluso con muchos registros
 
-- Usé la plantilla de jeroennoten
+Todo esto se instaló con:
+```bash
+npm install datatables.net datatables.net-bs5 jszip pdfmake
+```
 
-## 4. Desarrollo de Funcionalidades
+### **Paginación** 
 
-- Creé vistas y controladores
-- Conecté base de datos 
-- Implementé lógica de negocio
+Implementamos paginación:
 
-## 5. Testing y Ajustes
+- **10 registros por página** - Perfecto para no saturar la pantalla
+- **Navegación fácil** - Botones para ir de página en página
 
-- Probé responsividad y compatibilidad
-- Realicé ajustes finales
-- Optimicé rendimiento
+### **Subida de Imágenes** 
 
-## 6. Resultado Final
+Ahora todos los módulos principales soportan subida de imágenes:
 
-Proyecto completado y funcional en `/C:/xampp/htdocs/adminlte/`
+#### **Clientes** - Foto de perfil
+- Sube JPG, PNG, GIF (máx 2MB)
+- Se guarda en `storage/clientes/`
+- Ves la foto en la lista y en los formularios
+- Se elimina automáticamente si editas o borras
 
-## 7. Comandos Utilizados
+#### **Productos** - Imagen del producto
+- Sube JPG, PNG, GIF (máx 2MB)
+- Se guarda en `storage/productos/`
+- Visible en la lista
+- Con eliminación automática
+
+#### **Mascotas** - Foto de la mascota
+- Sube JPG, PNG, GIF (máx 2MB)
+- Se guarda en `storage/mascotas/`
+- **Vista en la tabla de mascotas** ✨
+- Preview en el formulario de edición
+
+#### **Empleados** - Foto de perfil
+- Sube JPG, PNG, GIF (máx 2MB)
+- Se guarda en `storage/empleados/`
+- **Visible en la tabla de empleados** ✨
+- Preview en el formulario de edición
+
+### **Archivos PDF** 
+Los productos pueden tener fichas técnicas en PDF:
+
+- Sube PDFs (máx 5MB)
+- Se guardan en `storage/productos/pdfs/`
+
+Para que funcione correctamente, ejecuta este comando una sola vez:
+```bash
+php artisan storage:link
+```
+
+### 1. Descargar dependencias
 
 ```bash
-# Crea proyecto Laravel
-composer create-project laravel/laravel nombre-proyecto
-cd nombre_proyecto
-
-# Instala dependencias
+cd c:\xampp\htdocs\adminlte
 composer install
-
-# Instala Bootstrap
-Composer require laravel/ui
-
-# Genera vistas
-php artisan ui Bootstrap –auth
-
-# Migra base de datos
-php artisan migrate
-
-# Instala AdminLTE, un panel administrativo con diseño profesional para Laravel
-Composer require jeroennoten/laravel-adminlte
-
-# Instala AdminLTE con todas las vistas, assets, autenticación y configuración completa.
-php artisan adminlte:install –type=full
-
-# Crea modelo, migración, controller, factory y seeder
-php artisan make:model "Nombre"
-
-# Ejecuta servidor local
-php artisan serve
-
-# Instala paquetes npm
 npm install
-
-# Compila assets
-npm run dev
-
-# Limpiar cache de configuración/vistas/rutas
-php artisan config:cache
-php artisan route:clear
-php artisan view:clear
 ```
+
+### 2. Preparar la base de datos
+
+```bash
+php artisan migrate:refresh --seed
+```
+Esto crea todas las tablas con los datos de prueba.
+
+### 3. Crear el enlace para imágenes
+
+```bash
+php artisan storage:link
+```
+
+### 4. Iniciar el servidor
+```bash
+php artisan serve
+```
+
+### 5. Acceder
+Abre tu navegador y ve a `http://localhost:8000`
+
+### Controllers 
+
+**ClientesController** Maneja clientes y fotos
+**ProductoController** Maneja productos, imágenes y PDFs
+**MascotasController** Maneja mascotas e imágenes
+**CitasController** Maneja citas 
+**EmpleadosController** Maneja empleados e imágenes
+
+### Vistas 
+- Todas las listas con búsqueda DataTables
+- Formularios con carga de archivos
+- Previsualizaciones de imágenes
+- Botones que cambian según permisos
+- Paginación 
+
+### Base de Datos (Las migraciones)
+
+create_roles_table
+add_role_id_to_users_table  
+add_foto_to_clientes_table
+add_imagen_and_archivo_to_productos_table
+add_imagen_to_mascotas_table
+add_imagen_to_empleados_table
+
+## Si algo no funciona:
+
+1. Asegúrate de ejecutar `php artisan storage:link`
+2. Verifica que `npm install` se ejecutó sin errores
+3. Comprueba que estás usando las credenciales correctas
+4. Mira la consola del navegador (F12) para ver errores
