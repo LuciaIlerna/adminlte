@@ -1,4 +1,4 @@
-# Segunda Entrega - CRM Sistema Veterinario en Laravel
+# Segunda Entrega
 
 Aquí encontrarás toda la información sobre las funcionalidades que se han implementado en la segunda entrega.
 
