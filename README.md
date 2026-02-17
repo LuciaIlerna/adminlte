@@ -59,13 +59,13 @@ Ahora todos los módulos principales soportan subida de imágenes:
 #### **Mascotas** - Foto de la mascota
 - Sube JPG, PNG, GIF (máx 2MB)
 - Se guarda en `storage/mascotas/`
-- **Vista en la tabla de mascotas** ✨
+- **Vista en la tabla de mascotas** 
 - Preview en el formulario de edición
 
 #### **Empleados** - Foto de perfil
 - Sube JPG, PNG, GIF (máx 2MB)
 - Se guarda en `storage/empleados/`
-- **Visible en la tabla de empleados** ✨
+- **Visible en la tabla de empleados** 
 - Preview en el formulario de edición
 
 ### **Archivos PDF** 
