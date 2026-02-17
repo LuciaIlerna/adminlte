@@ -1,7 +1,5 @@
 # Segunda Entrega
 
-Aquí encontrarás toda la información sobre las funcionalidades que se han implementado en la segunda entrega.
-
 ### **Sistema de Roles y Permisos** 
 
 Ahora el sistema distingue entre dos tipos de usuario, cada uno con diferentes permisos:
