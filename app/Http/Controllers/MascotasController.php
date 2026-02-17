@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Mascota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MascotasController extends Controller
 {
     public function index()
     {
-        $mascotas = Mascota::all();
+        $mascotas = Mascota::paginate(10);
         return view('mascotas.index', compact('mascotas'));
     }
 
@@ -27,9 +28,17 @@ class MascotasController extends Controller
             'edad' => 'nullable|integer|min:0|max:100',
             'tamano' => 'nullable|string|max:50',
             'peso' => 'nullable|numeric|min:0',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Mascota::create($request->all());
+        $data = $request->all();
+
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $request->file('imagen')->store('mascotas', 'public');
+        }
+
+        Mascota::create($data);
 
         return redirect()->route('mascotas.index')->with('success', 'Mascota creada correctamente.');
     }
@@ -53,15 +62,37 @@ class MascotasController extends Controller
             'edad' => 'nullable|integer|min:0|max:100',
             'tamano' => 'nullable|string|max:50',
             'peso' => 'nullable|numeric|min:0',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $mascota->update($request->all());
+        $data = $request->all();
+
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            // Eliminar imagen anterior si existe
+            if ($mascota->imagen && Storage::disk('public')->exists($mascota->imagen)) {
+                Storage::disk('public')->delete($mascota->imagen);
+            }
+            $data['imagen'] = $request->file('imagen')->store('mascotas', 'public');
+        }
+
+        $mascota->update($data);
 
         return redirect()->route('mascotas.index')->with('success', 'Mascota actualizada correctamente.');
     }
 
     public function destroy(Mascota $mascota)
     {
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('mascotas.index')
+                            ->with('error', 'No tienes permiso para eliminar mascotas.');
+        }
+
+        // Eliminar imagen si existe
+        if ($mascota->imagen && Storage::disk('public')->exists($mascota->imagen)) {
+            Storage::disk('public')->delete($mascota->imagen);
+        }
+
         $mascota->delete();
 
         return redirect()->route('mascotas.index')->with('success', 'Mascota eliminada.');

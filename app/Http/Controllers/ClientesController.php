@@ -8,7 +8,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
+        $clientes = Clientes::paginate(10);
         return view('clientes.index', compact('clientes'));
     }
 
@@ -25,9 +25,17 @@ class ClientesController extends Controller
             'email' => 'required|email|unique:clientes,email',
             'telefono' => 'nullable|string|max:20',
             'direccion' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Clientes::create($request->all());
+        $data = $request->all();
+
+        // Manejar la foto
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('clientes', 'public');
+        }
+
+        Clientes::create($data);
 
         return redirect()->route('clientes.index')
                          ->with('success', 'Cliente creado exitosamente.');
@@ -51,9 +59,21 @@ class ClientesController extends Controller
             'email' => 'required|email|unique:clientes,email,' . $cliente->id,
             'telefono' => 'nullable|string|max:20',
             'direccion' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $cliente->update($request->all());
+        $data = $request->all();
+
+        // Manejar la foto
+        if ($request->hasFile('foto')) {
+            // Eliminar foto anterior si existe
+            if ($cliente->foto && \Storage::disk('public')->exists($cliente->foto)) {
+                \Storage::disk('public')->delete($cliente->foto);
+            }
+            $data['foto'] = $request->file('foto')->store('clientes', 'public');
+        }
+
+        $cliente->update($data);
 
         return redirect()->route('clientes.index')
                          ->with('success', 'Cliente actualizado exitosamente.');
@@ -61,6 +81,17 @@ class ClientesController extends Controller
 
     public function destroy(Clientes $cliente)
     {
+        // Verificar si el usuario es admin
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('clientes.index')
+                            ->with('error', 'No tienes permiso para eliminar clientes.');
+        }
+
+        // Eliminar foto si existe
+        if ($cliente->foto && \Storage::disk('public')->exists($cliente->foto)) {
+            \Storage::disk('public')->delete($cliente->foto);
+        }
+
         $cliente->delete();
 
         return redirect()->route('clientes.index')

@@ -20,7 +20,7 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('clientes.store') }}" method="POST" class="needs-validation">
+                    <form action="{{ route('clientes.store') }}" method="POST" class="needs-validation" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Nombre -->
@@ -68,7 +68,7 @@
                         </div>
 
                         <!-- Dirección -->
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-3">
                             <label for="direccion" class="form-label font-weight-bold">
                                 <i class="fas fa-map-marker-alt text-success"></i> Dirección
                             </label>
@@ -76,6 +76,17 @@
                                    class="form-control form-control-lg @error('direccion') is-invalid @enderror"
                                    value="{{ old('direccion') }}">
                             @error('direccion') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                        </div>
+
+                        <!-- Foto -->
+                        <div class="form-group mb-4">
+                            <label for="foto" class="form-label font-weight-bold">
+                                <i class="fas fa-image text-success"></i> Foto del Cliente
+                            </label>
+                            <input type="file" id="foto" name="foto" accept=".jpg,.jpeg,.png,.gif"
+                                   class="form-control form-control-lg @error('foto') is-invalid @enderror">
+                            <small class="form-text text-muted">Máximo 2MB. Formatos: JPG, PNG, GIF</small>
+                            @error('foto') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- Buttons -->

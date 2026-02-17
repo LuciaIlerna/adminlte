@@ -14,6 +14,7 @@ class Clientes extends Model
         'email',
         'telefono',
         'direccion',
+        'foto',
     ];
     public $timestamps = true;
 }

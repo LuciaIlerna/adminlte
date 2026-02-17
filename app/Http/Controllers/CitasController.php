@@ -10,7 +10,7 @@ class CitasController extends Controller
 {
     public function index()
     {
-        $citas = Cita::all();
+        $citas = Cita::paginate(10);
         return view('citas.index', compact('citas'));
     }
 
@@ -22,9 +22,9 @@ class CitasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'nombre_mascota' => 'required|string|max:255',
-        'tipo_cita' => 'required|string|max:255',
-        'fecha_hora' => ['required', 'date_format:Y-m-d\TH:i'],
+            'nombre_mascota' => 'required|string|max:255',
+            'tipo_cita' => 'required|string|max:255',
+            'fecha_hora' => ['required', 'date_format:Y-m-d\TH:i'],
         ]);
 
         $data = $request->all();
@@ -61,6 +61,11 @@ class CitasController extends Controller
 
     public function destroy(Cita $cita)
     {
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('citas.index')
+                            ->with('error', 'No tienes permiso para eliminar citas.');
+        }
+
         $cita->delete();
 
         return redirect()->route('citas.index')->with('success', 'Cita eliminada.');

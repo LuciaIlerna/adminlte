@@ -15,6 +15,7 @@ class Mascota extends Model
         'edad',
         'tamano',
         'peso',
+        'imagen',
     ];
 
     public $timestamps = true;

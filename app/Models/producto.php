@@ -13,6 +13,8 @@ class producto extends Model
         'descripcion',
         'precio',
         'stock',
+        'imagen',
+        'archivo_pdf',
     ];
 
     public $timestamps = true;

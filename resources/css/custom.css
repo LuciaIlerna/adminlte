@@ -217,3 +217,76 @@
     font-size: 0.85rem;
     border-radius: 0.25rem;
 }
+
+/* ===== ESTILOS PERSONALIZADOS PAGINACIÓN ===== */
+.pagination-sm {
+    gap: 0.25rem;
+}
+
+.pagination-sm .page-link {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    border-radius: 0.25rem;
+    border: 1px solid #dee2e6;
+    color: #2ecc71;
+    transition: all 0.3s ease;
+}
+
+.pagination-sm .page-link i {
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.pagination-sm .page-item.active .page-link {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+    color: white;
+    box-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+}
+
+.pagination-sm .page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
+.pagination-sm .page-link:hover:not(.disabled) {
+    background-color: #f0f0f0;
+    color: #1e5631;
+    border-color: #2ecc71;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(46, 204, 113, 0.15);
+}
+
+.pagination-sm .page-item:first-child .page-link {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.pagination-sm .page-item:last-child .page-link {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.card-footer {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.card-footer .pagination {
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .pagination-sm .page-link {
+        padding: 0.3rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .pagination-sm .page-link i {
+        font-size: 0.65rem;
+    }
+}

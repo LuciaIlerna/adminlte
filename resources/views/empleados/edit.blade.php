@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('empleados.update', $empleado->id) }}" method="POST">
+                <form action="{{ route('empleados.update', $empleado->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -42,6 +42,21 @@
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $empleado->email) }}" required>
                         @error('email') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    @if($empleado->imagen)
+                        <div class="form-group">
+                            <label>Imagen Actual</label>
+                            <div>
+                                <img src="{{ asset('storage/' . $empleado->imagen) }}" alt="Imagen de empleado" style="max-width: 200px; margin: 10px 0;">
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="form-group">
+                        <label for="imagen">Cambiar Imagen</label>
+                        <input type="file" id="imagen" name="imagen" class="form-control @error('imagen') is-invalid @enderror" accept="image/*">
+                        @error('imagen') <span class="invalid-feedback">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="form-group">

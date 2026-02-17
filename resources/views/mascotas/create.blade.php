@@ -11,7 +11,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('mascotas.store') }}" method="POST">
+                    <form action="{{ route('mascotas.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
@@ -64,6 +64,15 @@
                             <input type="number" step="0.01" min="0" class="form-control @error('peso') is-invalid @enderror"
                                    id="peso" name="peso" value="{{ old('peso') }}">
                             @error('peso')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imagen">Imagen</label>
+                            <input type="file" class="form-control @error('imagen') is-invalid @enderror"
+                                   id="imagen" name="imagen" accept="image/*">
+                            @error('imagen')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>

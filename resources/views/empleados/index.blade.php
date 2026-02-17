@@ -24,6 +24,13 @@
         </div>
     @endif
 
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        </div>
+    @endif
+
     <!-- Table Card -->
     <div class="card card-outline elevation-3" style="border-top: 4px solid #16a085;">
         <div class="card-header" style="background-color: #16a085;">
@@ -39,15 +46,16 @@
         <div class="card-body p-0">
             @if($empleados->count() > 0)
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-sm">
+                    <table class="table table-striped table-hover table-sm" id="empleadosTable">
                         <thead style="background-color: #16a085; color: white;">
                             <tr>
                                 <th style="width: 8%">ID</th>
-                                <th style="width: 15%">Nombre</th>
-                                <th style="width: 15%">Apellido</th>
-                                <th style="width: 18%">Puesto</th>
+                                <th style="width: 10%">Imagen</th>
+                                <th style="width: 12%">Nombre</th>
+                                <th style="width: 12%">Apellido</th>
+                                <th style="width: 16%">Puesto</th>
                                 <th style="width: 18%">Email</th>
-                                <th style="width: 14%">Teléfono</th>
+                                <th style="width: 12%">Teléfono</th>
                                 <th style="width: 12%">Acciones</th>
                             </tr>
                         </thead>
@@ -55,6 +63,13 @@
                             @foreach($empleados as $emp)
                                 <tr>
                                     <td class="text-bold">{{ $emp->id }}</td>
+                                    <td>
+                                        @if($emp->imagen)
+                                            <img src="{{ asset('storage/' . $emp->imagen) }}" alt="Imagen" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                        @else
+                                            <span class="badge badge-secondary">Sin imagen</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $emp->nombre ?? 'N/A' }}</td>
                                     <td>{{ $emp->apellido ?? 'N/A' }}</td>
                                     <td><span class="badge badge-success">{{ $emp->puesto ?? 'N/A' }}</span></td>
@@ -67,18 +82,28 @@
                                         <a href="{{ route('empleados.edit', $emp->id) }}" class="btn btn-sm btn-warning" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('empleados.destroy', $emp->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
+                                        @if(auth()->user()->isAdmin())
+                                            <form action="{{ route('empleados.destroy', $emp->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-secondary" title="Solo Admin" disabled>
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                        </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+                <!-- Paginación -->
+                <div class="card-footer">
+                    {{ $empleados->links('pagination::bootstrap-5') }}
                 </div>
             @else
                 <div class="p-4 text-center">
@@ -91,4 +116,19 @@
         </div>
     </div>
 </div>
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('#empleadosTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+            },
+            paging: false,
+            searching: true,
+            ordering: true
+        });
+    });
+</script>
+@endpush
 @endsection

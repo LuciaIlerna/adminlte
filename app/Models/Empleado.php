@@ -14,6 +14,7 @@ class Empleado extends Model
         'puesto',
         'telefono',
         'email',
+        'imagen',
     ];
 
     public $timestamps = true;

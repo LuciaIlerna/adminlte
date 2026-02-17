@@ -15,7 +15,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('mascotas.update', $mascota->id) }}" method="POST">
+                <form action="{{ route('mascotas.update', $mascota->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -65,6 +65,22 @@
                                class="form-control @error('peso') is-invalid @enderror"
                                value="{{ old('peso', $mascota->peso) }}">
                         @error('peso') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    @if($mascota->imagen)
+                        <div class="form-group">
+                            <label>Imagen Actual</label>
+                            <div>
+                                <img src="{{ asset('storage/' . $mascota->imagen) }}" alt="Imagen de mascota" style="max-width: 200px; margin: 10px 0;">
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="form-group">
+                        <label for="imagen">Cambiar Imagen</label>
+                        <input type="file" id="imagen" name="imagen"
+                               class="form-control @error('imagen') is-invalid @enderror" accept="image/*">
+                        @error('imagen') <span class="invalid-feedback">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="form-group">

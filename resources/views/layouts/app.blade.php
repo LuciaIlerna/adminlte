@@ -47,6 +47,8 @@
 {{-- Add common Javascript/Jquery code --}}
 
 @push('js')
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
 <script>
 
     $(document).ready(function() {
@@ -69,6 +71,7 @@
 {{-- Add common CSS customizations --}}
 
 @push('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <style type="text/css">
 
